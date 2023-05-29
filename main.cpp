@@ -1,44 +1,64 @@
 #include <iostream>
-#include <sstream>
 
-#include <FractalCommon/FractalCommon.h>
+#include "variations.h"
 
-using Eigen::Vector3f;
 using namespace std;
 
-static constexpr int n_iter = 6;
-
-static const float a = 1.0f/sqrtf(3.0f);
-static const Vector3f dirs[] = {
-        {a, a, a},
-        {-a, a, a},
-        {a, -a, a},
-        {-a, -a, a},
-        {a, a, -a},
-        {-a, a, -a},
-        {a, -a, -a},
-        {-a, -a, -a}
-};
+//bool checkIntersections(Aggregate const & aggregate) {
+//    for (unsigned i = 0; i < aggregate.size()-1; i ++)
+//        for (unsigned j = i+1; j < aggregate.size(); j ++)
+//            if ((aggregate[i]-aggregate[j]).norm() <= 0.01f) return true;
+//    return false;
+//}
 
 int main() {
-    Aggregate aggregate;
-    aggregate.emplace_back(0.0f, 0.0f, 0.0f);
+    int n_iter;
+    char frac_type;
+    string out_file;
 
-    float distance = 2.0f;
-    for (int i = 0; i < n_iter; i ++) {
-        Aggregate newAggregate = aggregate;
-        for (auto const & dir : dirs) {
-            for (auto const & pp : aggregate) {
-                newAggregate.emplace_back(pp+dir*distance);
-            }
-        }
-        aggregate = newAggregate;
-        distance *= 3.0f;
+    cout << "Number of algorithm iterations: ";
+    cin >> n_iter;
 
-        stringstream filename;
-        filename << "agg_" << i << ".vtk";
-        dumpVtk(aggregate, filename.str().c_str());
+    if (n_iter <= 0) {
+        cerr << "The number of iterations must be greater than 0" << endl;
+        return EXIT_FAILURE;
     }
+
+    cout << "Enter the output file name: ";
+    cin >> out_file;
+
+    if (out_file.size() < 4 || out_file.substr(out_file.size()-4, 4) != ".vtk")
+        out_file += ".vtk";
+
+    cout << "Select aggregate type (a-d) :";
+    cin >> frac_type;
+
+    Aggregate aggregate;
+    switch (frac_type) {
+        case 'a':
+            aggregate = getAggregateTypeA(n_iter);
+            break;
+        case 'b':
+            aggregate = getAggregateTypeB(n_iter);
+            break;
+        case 'c':
+            aggregate = getAggregateTypeC(n_iter);
+            break;
+        case 'd':
+            aggregate = getAggregateTypeD(n_iter);
+            break;
+        default:
+            cerr << "Unrecognized aggregate type" << endl;
+    }
+
+    dumpVtk(aggregate, out_file.c_str());
+
+    //auto aggregate = getAggregateTypeD(3);
+
+//    if (checkIntersections(aggregate))
+//        cout << "Intersections detected" << endl;
+
+    //dumpVtk(aggregate, "test-aggregate.vtk");
 
     return 0;
 }
