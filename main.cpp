@@ -30,7 +30,7 @@ int main() {
     if (out_file.size() < 4 || out_file.substr(out_file.size()-4, 4) != ".vtk")
         out_file += ".vtk";
 
-    cout << "Select aggregate type (a-d) :";
+    cout << "Select aggregate type (a-d): ";
     cin >> frac_type;
 
     Aggregate aggregate;
