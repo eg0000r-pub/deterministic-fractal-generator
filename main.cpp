@@ -53,6 +53,12 @@ int main() {
 
     dumpVtk(aggregate, out_file.c_str());
 
+    float rg = radiusOfGyration(aggregate);
+    auto N = float(aggregate.size());
+    float df = 2.0f;
+    float k0 = N/powf(rg, df);
+    cout << "N=" << N << ", rg=" << rg << ", k0=" << k0 << endl;
+
     //auto aggregate = getAggregateTypeD(3);
 
 //    if (checkIntersections(aggregate))

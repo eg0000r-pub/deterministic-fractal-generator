@@ -17,7 +17,7 @@
 
 \section*{Synopsis}
 
-This program can different types of deterministic fractal aggregates, including several types of named aggregates. The fractal (Hausdorff) dimesion of those aggregates is well-known and the size can be controlled by adjusting the ``number of iterations'' parameter.
+This program can generate different types of deterministic fractal aggregates, including several types of named aggregates. The fractal (Hausdorff) dimesion of those aggregates is well-known and the size can be controlled by adjusting the ``number of iterations'' parameter.
 
 \section*{Compilation}
 
@@ -103,5 +103,36 @@ Features:
 \includegraphics[width=0.49\textwidth]{resources/type-d-img-3.png}
 \caption*{\underline{Type D} aggregate after 1 iteration (left) and 2 iterations (right)}
 \end{figure}
+
+\section*{Pre-exponential fractor}
+
+Fractal dimesion can be derived from any property that is related to distribution of mass in space. One such property is radius of gyration ($R_g$) -- the root mean square distance of PPs from the center of mass of the aggregate. The center of mass $\vec{r}_o$ can be found with
+$$
+	\vec{r}_0=\frac{1}{N}\sum_{i=1}^{N}{\vec{r}_i}
+$$
+where $N$ is the number of PPs in the aggregate and $\vec{r}_i$ is postion of $i$-th PP. $R_g$ is then
+$$
+	R_g^2=\frac{1}{N}\sum_{i=1}^{N}{(\vec{r}_i-\vec{r}_0)^2}
+$$
+$N$ must be proportional to $R_g^{D_f}$. Let the proportionality constant be $k_0$, then
+$$
+	N=k_0(R_g)^{D_f}
+$$
+Knowing $N$, $D_f$, and $R_g$ for each aggregate type we can readily compute $k_0$. The calculated values are presented in the table below.
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{c c}
+\hline
+	Type & $k_0$\\
+\hline
+	A & 2.25\\
+	B & 2.12\\
+	C & 0.779\\
+	D & 2.01\\
+\hline
+\end{tabular}
+\caption*{Pre-exponential fractor as defined with $R_g$ determined for every aggregate type}
+\end{table}
 
 \end{document}
